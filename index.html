@@ -17,27 +17,19 @@
             if (playerSelection == computerSelection) {
                 return `It's a draw! You both chose ${ playerSelection }`;
             }
-            if (playerSelection == 'rock') {
-                if (computerSelection == 'scissors') {
-                    return `You win! ${ playerSelection } beats ${ computerSelection }`;
-                } else {
-                    return `You lose! ${ computerSelection } beats ${ playerSelection }`;
-                }
+            if (playerWon(playerSelection, computerSelection)) {
+                return `You win! ${ playerSelection } beats ${ computerSelection }`;
+            } else {
+                return `You lose! ${ computerSelection } beats ${ playerSelection }`;
             }
-            if (playerSelection == 'scissors') {
-                if (computerSelection == 'paper') {
-                    return `You win! ${ playerSelection } beats ${ computerSelection }`;
-                } else {
-                    return `You lose! ${ computerSelection } beats ${ playerSelection }`;
-                }
+        }
+        function playerWon(playerSelection, computerSelection) {
+            const winLogic = {
+                rock: { win: 'scissors', loose: 'paper' },
+                paper: { win: 'rock', loose: 'scissors' },
+                scissors: { win: 'paper', loose: 'rock'}
             }
-            if (playerSelection == 'paper') {
-                if (computerSelection == 'rock') {
-                    return `You win! ${ playerSelection } beats ${ computerSelection }`;
-                } else {
-                    return `You lose! ${ computerSelection } beats ${ playerSelection }`;
-                }
-            }
+            return winLogic[playerSelection].win === computerSelection;
         }
     </script>
 </body>
