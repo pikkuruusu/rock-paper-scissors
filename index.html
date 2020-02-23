@@ -15,12 +15,12 @@
         function playRound(playerSelection, computerSelection) {
             playerSelection = playerSelection.toLowerCase();
             if (playerSelection == computerSelection) {
-                return `It's a draw! You both chose ${ playerSelection }`;
+                return { msg: `It's a draw! You both chose ${ playerSelection }`, playerScore: 0, computerScore: 0 };
             }
             if (playerWon(playerSelection, computerSelection)) {
-                return `You win! ${ playerSelection } beats ${ computerSelection }`;
+                return { msg: `You win! ${ playerSelection } beats ${ computerSelection }`, playerScore: 1, computerScore: 0 };
             } else {
-                return `You lose! ${ computerSelection } beats ${ playerSelection }`;
+                return { msg: `You lose! ${ computerSelection } beats ${ playerSelection }`, playerScore: 0, computerScore: 1 };
             }
         }
         function playerWon(playerSelection, computerSelection) {
@@ -36,9 +36,14 @@
             let computerScore = 0;
             for (let i = 0; i < 5; i++) {
                 let playerSelection = prompt('Rock, paper, scissors?');
-                playRound(playerSelection, computerPlay());
+                let result = playRound(playerSelection, computerPlay());
+                playerScore += result.playerScore;
+                computerScore += result.computerScore;
+                console.log(result.msg);
             }
+            console.log(`Player: ${ playerScore }, Computer: ${ computerScore }`)
         }
+        game();
     </script>
 </body>
 </html>
