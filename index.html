@@ -7,13 +7,25 @@
 </head>
 <body>
     <script>
+        let choices = ['rock', 'paper', 'scissors'];
         function computerPlay() {
-            let choices = ['rock', 'paper', 'scissors'];
             let randomNumber = Math.floor(Math.random() * 3);
             return choices[randomNumber];
         }
+        function playerPrompt() {
+            let selection;
+            while (true) {
+                selection = prompt('Rock, paper, scissors?');
+                selection = selection.toLowerCase();
+                if (choices.includes(selection)) {
+                    break;
+                } else {
+                    console.log('Please select rock, paper or scissors!')
+                }
+            }
+            return selection;
+        }
         function playRound(playerSelection, computerSelection) {
-            playerSelection = playerSelection.toLowerCase();
             if (playerSelection == computerSelection) {
                 return { msg: `It's a draw! You both chose ${ playerSelection }`, playerScore: 0, computerScore: 0 };
             }
@@ -35,7 +47,7 @@
             let playerScore = 0;
             let computerScore = 0;
             for (let i = 0; i < 5; i++) {
-                let playerSelection = prompt('Rock, paper, scissors?');
+                let playerSelection = playerPrompt();
                 let result = playRound(playerSelection, computerPlay());
                 playerScore += result.playerScore;
                 computerScore += result.computerScore;
