@@ -1,0 +1,19 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr minmax(300px, 580px) 1fr;
+}
+
+.wrapper header {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+.wrapper main {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+.wrapper footer {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
