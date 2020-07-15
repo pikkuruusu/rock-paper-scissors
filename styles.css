@@ -9,6 +9,7 @@
 }
 
 .wrapper main {
+    display: grid;
     grid-column-start: 2;
     grid-column-end: 3;
 }
@@ -16,4 +17,8 @@
 .wrapper footer {
     grid-column-start: 2;
     grid-column-end: 3;
+}
+
+#player-selection button {
+    width: 100%;
 }
