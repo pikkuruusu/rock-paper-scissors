@@ -19,6 +19,18 @@
     grid-column-end: 3;
 }
 
-#player-selection button {
-    width: 100%;
+#player-selection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#player-selection img {
+    margin: 5px 10px 5px 10px;
+    height: 110px;
+    vertical-align: middle;
+}
+
+#player-selection #paper {
+    height: 115px;
 }
