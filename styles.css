@@ -22,18 +22,25 @@
     text-align: center;
 }
 
+.gameplay {
+    margin-bottom: 10px;
+}
+
 .player-selection {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin-bottom: 10px;
 }
 
 .selection {
     margin: 5px 10px 5px 10px;
     height: 110px;
     width: 110px;
-    border: 1px solid #ccc;
+    border: 1px solid #222222;
     border-radius: 10px;
+    box-shadow: 0 1px 4px 0 #888888;
+    opacity: 0.3;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,6 +48,8 @@
 
 .selection:hover {
     box-shadow: 0 1px 6px 0 #888888;
+    opacity: 0.9;
+
 }
 
 .selection img {
