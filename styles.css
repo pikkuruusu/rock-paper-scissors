@@ -6,31 +6,43 @@
 .wrapper header {
     grid-column-start: 2;
     grid-column-end: 3;
+    text-align: center;
 }
 
 .wrapper main {
     display: grid;
     grid-column-start: 2;
     grid-column-end: 3;
+    text-align: center;
 }
 
 .wrapper footer {
     grid-column-start: 2;
     grid-column-end: 3;
+    text-align: center;
 }
 
-#player-selection {
+.player-selection {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
 
-#player-selection img {
+.selection {
     margin: 5px 10px 5px 10px;
     height: 110px;
-    vertical-align: middle;
+    width: 110px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#player-selection #paper {
-    height: 115px;
+.selection:hover {
+    box-shadow: 0 1px 6px 0 #888888;
+}
+
+.selection img {
+    width: 95px;
 }
