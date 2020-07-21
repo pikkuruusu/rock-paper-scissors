@@ -1,23 +1,13 @@
-const choices = {
-    ROCK: {
-        id: "rock",
-        win: "scissors",
-    },
-    PAPER: {
-        id: "paper",
-        win: "rock"
-    },
-    SCISSORS: {
-        id: "scissors",
-        win: "paper"
-    }
+const choices = ['rock', 'paper', 'scissors'];
+
+function gameScreen(e) {
+    const screen = document.querySelector('.gameplay');
+    let screenMsg = playRound(this.id).msg;
+    screen.textContent = screenMsg;
 }
 
-
-// function computerPlay() {
-//     let randomNumber = Math.floor(Math.random() * 3);
-//     return choices[randomNumber];
-// }
+const playerSelection = document.querySelectorAll('.selection');
+playerSelection.forEach(selection => selection.addEventListener('click', gameScreen))
 
 // function playerPrompt() {
 //     let selection;
@@ -32,24 +22,27 @@ const choices = {
 //     }
 //     return selection;
 // }
-// function playRound(playerSelection, computerSelection) {
-//     if (playerSelection == computerSelection) {
-//         return { msg: `It's a draw! You both chose ${ playerSelection }`, playerScore: 0, computerScore: 0 };
-//     }
-//     if (playerWon(playerSelection, computerSelection)) {
-//         return { msg: `You win! ${ playerSelection } beats ${ computerSelection }`, playerScore: 1, computerScore: 0 };
-//     } else {
-//         return { msg: `You lose! ${ computerSelection } beats ${ playerSelection }`, playerScore: 0, computerScore: 1 };
-//     }
-// }
-// function playerWon(playerSelection, computerSelection) {
-//     const winLogic = {
-//         rock: { win: 'scissors', loose: 'paper' },
-//         paper: { win: 'rock', loose: 'scissors' },
-//         scissors: { win: 'paper', loose: 'rock'}
-//     }
-//     return winLogic[playerSelection].win === computerSelection;
-// }
+function playRound(selectionInput) {
+    let randomNumber = Math.floor(Math.random() * 3);
+    let computerSelection = choices[randomNumber];
+    
+    if (selectionInput == computerSelection) {
+        return { msg: `It's a draw! You both chose ${ selectionInput }`, playerScore: 0, computerScore: 0 };
+    }
+    if (playerWon(selectionInput, computerSelection)) {
+        return { msg: `You win! ${ selectionInput[0].toUpperCase() + selectionInput.slice(1) } beats ${ computerSelection }`, playerScore: 1, computerScore: 0 };
+    } else {
+        return { msg: `You lose! ${ computerSelection[0].toUpperCase() + computerSelection.slice(1) } beats ${ selectionInput }`, playerScore: 0, computerScore: 1 };
+    }
+}
+function playerWon(selectionInput, computerSelection) {
+    const winLogic = {
+        rock: { win: 'scissors', loose: 'paper' },
+        paper: { win: 'rock', loose: 'scissors' },
+        scissors: { win: 'paper', loose: 'rock'}
+    }
+    return winLogic[selectionInput].win === computerSelection;
+}
 // function game() {
 //     let playerScore = 0;
 //     let computerScore = 0;
