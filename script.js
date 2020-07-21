@@ -1,6 +1,7 @@
 let round = 0;
 let playerScore = 0;
 let computerScore = 0;
+let allowedToPlay = false;
 
 function playerWon(selectionInput, computerSelection) {
     const winLogic = {
@@ -12,47 +13,75 @@ function playerWon(selectionInput, computerSelection) {
 }
 
 function playRound(selectionInput) {
-    if (round >= 5) {
-        return { msg: `Game Over!`, playerScore: 0, computerScore: 0 };
-    }
-
     const choices = ['rock', 'paper', 'scissors'];
     let randomNumber = Math.floor(Math.random() * 3);
     let computerSelection = choices[randomNumber];
 
     round += 1;
+    if (round >= 5) {
+        allowedToPlay = false;
+    }
     
     if (selectionInput == computerSelection) {
-        return { msg: `It's a draw! You both chose ${ selectionInput }`, playerScore: 0, computerScore: 0 };
+        return { msg: `Bot chose ${ computerSelection }! It's a draw!`, playerScore: 0, computerScore: 0 };
     }
     if (playerWon(selectionInput, computerSelection)) {
-        return { msg: `You win! ${ selectionInput[0].toUpperCase() + selectionInput.slice(1) } beats ${ computerSelection }`, playerScore: 1, computerScore: 0 };
+        return { msg: `Bot chose ${ computerSelection }! You won!`, playerScore: 1, computerScore: 0 };
     } else {
-        return { msg: `You lose! ${ computerSelection[0].toUpperCase() + computerSelection.slice(1) } beats ${ selectionInput }`, playerScore: 0, computerScore: 1 };
+        return { msg: `Bot chose ${ computerSelection }! You lost!`, playerScore: 0, computerScore: 1 };
     }
 }
 
 function game(e) {
-    let result = playRound(this.id);
+    if (allowedToPlay) {
+        let result = playRound(this.id);
 
-    const screen = document.querySelector('.gameplay');
-    screen.textContent = result.msg;
+        if (round >= 5) {
+            endScreen(result.msg);
+        } else {
+            screen.textContent = result.msg;
+        }
 
-    const playerScoreScreen = document.querySelector('#player-score');
-    const computerScoreScreen = document.querySelector('#computer-score');
-    playerScore += result.playerScore;
-    computerScore += result.computerScore;
+        const playerScoreScreen = document.querySelector('#player-score');
+        const computerScoreScreen = document.querySelector('#computer-score');
+        playerScore += result.playerScore;
+        computerScore += result.computerScore;
 
-    playerScoreScreen.textContent = `You: ${ playerScore }`;
-    computerScoreScreen.textContent = `Computer: ${ computerScore }`;
+        playerScoreScreen.textContent = `You: ${ playerScore }`;
+        computerScoreScreen.textContent = `Bot: ${ computerScore }`;
 
-    const roundScreen = document.querySelector('#roundbox');
+        const roundScreen = document.querySelector('#roundbox');
 
-    roundScreen.textContent = `Round: ${ round }`;
+        roundScreen.textContent = `Round: ${ round }`;
+    } else {
+        endScreen();
+    }
+    
 }
 
-const playerSelection = document.querySelectorAll('.selection');
-playerSelection.forEach(selection => selection.addEventListener('click', game))
+function endScreen(endMsg) {
+    screen.innerHTML = `${ endMsg } <br> Game Over!`;
+
+}
+
+function start() {
+    allowedToPlay = true;
+    allowPlay.addEventListener('transitionend', () => {
+        screen.textContent = 'Choose Rock, Paper or Scissors!';
+    })
+    allowPlay.classList.add('hidden');
+
+    const selectionArea = document.querySelector('.player-selection');
+    selectionArea.classList.remove('fade-selection');
+
+    const playerSelection = document.querySelectorAll('.selection');
+    playerSelection.forEach(selection => selection.classList.add('playing-selection'));
+    playerSelection.forEach(selection => selection.addEventListener('click', game));
+}
+
+const screen = document.querySelector('.gameplay');
+const allowPlay = document.querySelector('#play');
+allowPlay.addEventListener('click', start)
 // function game() {
 //     let playerScore = 0;
 //     let computerScore = 0;
