@@ -22,7 +22,18 @@
     text-align: center;
 }
 
+.scorebox {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-evenly;
+}
+
+#roundbox {
+    text-align: center;
+}
+
 .gameplay {
+    height: 110px;
     margin-bottom: 10px;
 }
 
