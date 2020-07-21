@@ -12,6 +12,10 @@ function playerWon(selectionInput, computerSelection) {
 }
 
 function playRound(selectionInput) {
+    if (round >= 5) {
+        return { msg: `Game Over!`, playerScore: 0, computerScore: 0 };
+    }
+
     const choices = ['rock', 'paper', 'scissors'];
     let randomNumber = Math.floor(Math.random() * 3);
     let computerSelection = choices[randomNumber];
