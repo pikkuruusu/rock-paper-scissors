@@ -50,6 +50,7 @@ h1 {
     height: 90px;
     margin-bottom: 10px;
     font-size: 1.8em;
+    transition: opacity 0.5s ease;
 }
 
 #play {

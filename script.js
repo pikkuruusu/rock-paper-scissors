@@ -37,7 +37,7 @@ function game(e) {
         let result = playRound(this.id);
 
         if (round >= 5) {
-            endScreen(result.msg);
+            end(result.msg);
         } else {
             screen.textContent = result.msg;
         }
@@ -53,15 +53,24 @@ function game(e) {
         const roundScreen = document.querySelector('#roundbox');
 
         roundScreen.textContent = `Round: ${ round }`;
-    } else {
-        endScreen();
-    }
-    
+    }     
 }
 
-function endScreen(endMsg) {
+function end(endMsg) {
     screen.innerHTML = `${ endMsg } <br> Game Over!`;
 
+    selectionArea.classList.add('fade-selection');
+
+    playerSelection.forEach(selection => selection.classList.remove('playing-selection'));
+    playerSelection.forEach(selection => selection.removeEventListener('click', game));
+
+    screen.addEventListener('transitionend', () => {
+        screen.innerHTML = '<span id=\'replay\'>Click to replay!</span>';
+        screen.classList.remove('hidden');
+    })
+
+    setTimeout(function() { screen.classList.add('hidden') }, 1800);
+    ;
 }
 
 function start() {
@@ -71,27 +80,15 @@ function start() {
     })
     allowPlay.classList.add('hidden');
 
-    const selectionArea = document.querySelector('.player-selection');
     selectionArea.classList.remove('fade-selection');
 
-    const playerSelection = document.querySelectorAll('.selection');
     playerSelection.forEach(selection => selection.classList.add('playing-selection'));
     playerSelection.forEach(selection => selection.addEventListener('click', game));
 }
 
 const screen = document.querySelector('.gameplay');
+const selectionArea = document.querySelector('.player-selection');
+const playerSelection = document.querySelectorAll('.selection');
 const allowPlay = document.querySelector('#play');
+
 allowPlay.addEventListener('click', start)
-// function game() {
-//     let playerScore = 0;
-//     let computerScore = 0;
-//     for (let i = 0; i < 5; i++) {
-//         let playerSelection = playerPrompt();
-//         let result = playRound(playerSelection, computerPlay());
-//         playerScore += result.playerScore;
-//         computerScore += result.computerScore;
-//         console.log(result.msg);
-//     }
-//     console.log(`Player: ${ playerScore }, Computer: ${ computerScore }`)
-// }
-// game();
