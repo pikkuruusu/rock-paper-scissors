@@ -1,4 +1,4 @@
-let round = 0;
+let round = 1;
 let playerScore = 0;
 let computerScore = 0;
 let allowedToPlay = false;
@@ -18,7 +18,7 @@ function playRound(selectionInput) {
     let computerSelection = choices[randomNumber];
 
     round += 1;
-    if (round >= 5) {
+    if (round >= 6) {
         allowedToPlay = false;
     }
     
@@ -32,27 +32,26 @@ function playRound(selectionInput) {
     }
 }
 
-function game(e) {
+function game() {
     if (allowedToPlay) {
         let result = playRound(this.id);
 
-        if (round >= 5) {
+        if (round >= 6) {
             end(result.msg);
         } else {
             screen.textContent = result.msg;
         }
 
-        const playerScoreScreen = document.querySelector('#player-score');
-        const computerScoreScreen = document.querySelector('#computer-score');
         playerScore += result.playerScore;
         computerScore += result.computerScore;
 
         playerScoreScreen.textContent = `You: ${ playerScore }`;
         computerScoreScreen.textContent = `Bot: ${ computerScore }`;
+        
+        if (round <= 5 ) {
+            roundScreen.textContent = `Round: ${ round }`;
+        }
 
-        const roundScreen = document.querySelector('#roundbox');
-
-        roundScreen.textContent = `Round: ${ round }`;
     }     
 }
 
@@ -65,20 +64,31 @@ function end(endMsg) {
     playerSelection.forEach(selection => selection.removeEventListener('click', game));
 
     screen.addEventListener('transitionend', () => {
-        screen.innerHTML = '<span id=\'replay\'>Click to replay!</span>';
+        screen.innerHTML = '<span id=\'replay\' class=\'play-button\'>Click to replay!</span>';
         screen.classList.remove('hidden');
-    })
+
+        const replayButton = document.querySelector('#replay');
+        replayButton.addEventListener('click', function() { start(replayButton); });
+    }, { once: true });
 
     setTimeout(function() { screen.classList.add('hidden') }, 1800);
-    ;
 }
 
-function start() {
+function start(playElement) {
     allowedToPlay = true;
-    allowPlay.addEventListener('transitionend', () => {
+    round = 1;
+    playerScore = 0;
+    computerScore = 0;
+
+    playerScoreScreen.textContent = `You: ${ playerScore }`;
+    computerScoreScreen.textContent = `Bot: ${ computerScore }`;
+    roundScreen.textContent = `Round: ${ round }`;
+
+    playElement.addEventListener('transitionend', () => {
+        console.log('is run');
         screen.textContent = 'Choose Rock, Paper or Scissors!';
     })
-    allowPlay.classList.add('hidden');
+    playElement.classList.add('hidden');
 
     selectionArea.classList.remove('fade-selection');
 
@@ -89,6 +99,9 @@ function start() {
 const screen = document.querySelector('.gameplay');
 const selectionArea = document.querySelector('.player-selection');
 const playerSelection = document.querySelectorAll('.selection');
-const allowPlay = document.querySelector('#play');
+const playButton = document.querySelector('#play');
+const playerScoreScreen = document.querySelector('#player-score');
+const computerScoreScreen = document.querySelector('#computer-score');
+const roundScreen = document.querySelector('#roundbox');
 
-allowPlay.addEventListener('click', start)
+playButton.addEventListener('click', function() { start(playButton); } );
